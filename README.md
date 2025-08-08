@@ -1,39 +1,33 @@
-# Glide
+Glide
 
-A minimal, responsive arcade dodger with a local leaderboard. No backend. Built with HTML/CSS/JS.
+A minimal browser dodge game with a local leaderboard. Static files only; no backend required. Optimized for Vercel and offline use via a Service Worker.
 
-## Run locally
+Deploy on Vercel (CLI)
 
-```bash
-# any static server works
-python3 -m http.server 5173
-# open http://localhost:5173
-```
+1. Install Vercel CLI: npm i -g vercel
+2. Login: vercel login
+3. From the project folder, deploy: vercel --prod
 
-## Deploy to Vercel
+Deploy on Vercel (Dashboard)
 
-This repo is deploy-ready for Vercel as a static site.
+1. Import the project at vercel.com
+2. Framework Preset: Other
+3. Build Command: (leave empty)
+4. Output Directory: .
 
-- via CLI:
+Update the live site
 
-```bash
-npm i -g vercel
-vercel login
-vercel --prod
-```
+1. Edit files in your project folder
+2. To ensure clients get the newest assets immediately, either:
+   - increment CACHE_VERSION in sw.js, or
+   - add a version query to assets in index.html (e.g., styles.css?v=20250808, script.js?v=20250808)
+3. Deploy again: vercel --prod
 
-- via Dashboard:
-  - Import the repo at vercel.com, Framework Preset: “Other”.
-  - Build Command: none
-  - Output Directory: . (project root)
+Files
 
-`vercel.json` config sets long cache for JS/CSS and no-store for HTML.
-
-## Files
-- `index.html`, `styles.css`, `script.js`: the game
-- `404.html`: friendly not-found
-- `vercel.json`: static deploy configuration
-
-## Notes
-- Scores are saved in browser localStorage on each device.
-- Works on desktop and mobile. Use A/D or ←/→ keys; drag to move on touch. 
+- index.html
+- styles.css
+- script.js
+- sw.js
+- vercel.json
+- 404.html 
