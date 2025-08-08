@@ -10,3 +10,5 @@ Files
 - sw.js
 - vercel.json
 - 404.html 
+
+<img width="1440" height="678" alt="Screenshot 2025-08-08 at 12 57 50 PM" src="https://github.com/user-attachments/assets/dce5952b-88d0-48ad-af22-9911c13e7672" />
