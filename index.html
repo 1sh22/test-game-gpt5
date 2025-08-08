@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Glide</title>
+    <meta name="description" content="A minimal, modern dodge game with a local leaderboard. Play on phone or laptop." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="backdrop"></div>
+
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-glow" aria-hidden="true"></div>
+        <h1>Glide</h1>
+      </div>
+      <nav class="header-actions">
+        <button class="btn text" id="btnHelp" aria-haspopup="dialog">Help</button>
+        <button class="btn text" id="btnLeaderboard" aria-haspopup="dialog">Leaderboard</button>
+        <button class="btn icon" id="btnSound" aria-pressed="true" title="Toggle sound" aria-label="Toggle sound">
+          <span id="soundIcon">🔊</span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="game-shell">
+      <section class="hud">
+        <div class="hud-item"><span class="label">Score</span><span class="value" id="hudScore">0</span></div>
+        <div class="hud-item"><span class="label">Best</span><span class="value" id="hudBest">0</span></div>
+        <div class="hud-item"><span class="label">x</span><span class="value" id="hudMultiplier">1.0</span></div>
+        <div class="hud-spacer"></div>
+        <button class="btn pill" id="btnPause">Pause</button>
+      </section>
+
+      <div class="canvas-wrap">
+        <canvas id="gameCanvas" width="390" height="700" aria-label="Game canvas" role="img"></canvas>
+        <div class="touch-hint" id="touchHint">Touch and drag to move</div>
+      </div>
+    </main>
+
+    <!-- Start Screen Modal -->
+    <dialog id="startDialog" class="modal">
+      <form method="dialog" class="modal-card">
+        <h2>Ready?</h2>
+        <p class="muted">Dodge blocks, skim close for multiplier, collect orbs. Arrow keys or drag to move.</p>
+        <div class="row">
+          <button id="btnStart" class="btn primary grow">Play</button>
+        </div>
+        <div class="row small">
+          <button class="btn ghost" id="openHelp">How to play</button>
+          <button class="btn ghost" id="openLeaderboard">Leaderboard</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Pause Modal -->
+    <dialog id="pauseDialog" class="modal">
+      <form method="dialog" class="modal-card">
+        <h2>Paused</h2>
+        <div class="row">
+          <button id="btnResume" class="btn primary grow">Resume</button>
+        </div>
+        <div class="row small">
+          <button class="btn ghost" id="pauseToStart">Main Menu</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Game Over Modal -->
+    <dialog id="gameOverDialog" class="modal">
+      <form method="dialog" class="modal-card">
+        <h2>Game Over</h2>
+        <p class="muted">Score: <strong id="finalScore">0</strong></p>
+        <label class="input">
+          <span>Your name</span>
+          <input id="playerName" maxlength="16" placeholder="Player" />
+        </label>
+        <div class="row">
+          <button id="btnSaveScore" class="btn primary">Save score</button>
+          <button id="btnRetry" class="btn">Retry</button>
+        </div>
+        <div class="row small">
+          <button class="btn ghost" id="btnShare">Share</button>
+          <button class="btn ghost" id="goToLeaderboard">Leaderboard</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Help Modal -->
+    <dialog id="helpDialog" class="modal">
+      <form method="dialog" class="modal-card">
+        <h2>How to Play</h2>
+        <ul class="bullets">
+          <li>Dodge blocks. A near-miss increases your multiplier.</li>
+          <li>Collect orbs for bonus points.</li>
+          <li>Keyboard: A/D or ◀ ▶. Touch: drag horizontally.</li>
+          <li>The longer you survive, the faster it gets.</li>
+        </ul>
+        <div class="row">
+          <button class="btn primary" id="helpClose">Got it</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Leaderboard Modal -->
+    <dialog id="leaderboardDialog" class="modal">
+      <form method="dialog" class="modal-card">
+        <h2>Leaderboard (This device)</h2>
+        <ol id="leaderboardList" class="leaderboard"></ol>
+        <div class="row small">
+          <button class="btn ghost" id="btnClearScores">Clear</button>
+          <button class="btn primary" id="leaderboardClose">Close</button>
+        </div>
+      </form>
+    </dialog>
+
+    <footer class="app-footer">
+      <span>made with gpt 5</span>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then((reg) => {
+            if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }).catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html> 
